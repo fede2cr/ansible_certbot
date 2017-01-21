@@ -1,8 +1,3 @@
-sudo: required
-
-env:
-  - ARCH_TRAVIS_CLEAN_CHROOT=1
-
 dist: trusty
 
 before_install:
@@ -11,35 +6,6 @@ before_install:
 install:
   - sudo pip install ansible
 
-arch:
-  packages:
-    - ansible
-  script:
-    - "ansible-playbook -i inventory/hosts.example arch_desktop/full-desktop.yml --syntax-check"
-    - "sudo ansible-playbook -i inventory/hosts.example arch_desktop/full-desktop.yml"
-    - >
-      sudo ansible-playbook -i inventory/hosts.example arch_desktop/full-desktop.yml
-      | grep -q 'changed=0.*failed=0'
-      && (echo 'Idempotence test: pass' && exit 0)
-      || (echo 'Idempotence test: fail' && exit 1)
-    - "ansible-playbook -i inventory/hosts.example arch_desktop/pacman-packages.yml --syntax-check"
-    - "sudo ansible-playbook -i inventory/hosts.example arch_desktop/pacman-packages.yml"
-    - >
-      sudo ansible-playbook -i inventory/hosts.example arch_desktop/pacman-packages.yml
-      | grep -q 'changed=0.*failed=0'
-      && (echo 'Idempotence test: pass' && exit 0)
-      || (echo 'Idempotence test: fail' && exit 1)
-    - "ansible-playbook -i inventory/hosts.example octoprint_setup/octoprint_setup.yml --syntax-check"
-    - "sudo ansible-playbook -i inventory/hosts.example octoprint_setup/octoprint_setup.yml"
-    - "ansible-playbook -i inventory/hosts.example --syntax-check terminal_kitty/terminal_kitty.yml"
-    - "sudo ansible-playbook -i inventory/hosts.example terminal_kitty/terminal_kitty.yml"
 script:
-  - "ansible-playbook -i inventory/hosts.example --syntax-check greencore_common/*yml"
-  - "sudo ansible-playbook -i inventory/hosts.example --syntax-check greencore_common/01-upgrade.yml"
-  - "ansible-playbook -i inventory/hosts.example --syntax-check jupyter-notebook/install-jupyter.yml"
-  - "sudo ansible-playbook -i inventory/hosts.example jupyter-notebook/install-jupyter.yml"
-  - "ansible-playbook -i inventory/hosts.example --syntax-check phant.io/install-phant.yml"
-  - "sudo ansible-playbook -i inventory/hosts.example phant.io/install-phant.yml"
   - "ansible-playbook -i inventory/hosts.example --syntax-check certbot_install/certbot_install.yml"
   - "sudo ansible-playbook -i inventory/hosts.example certbot_install/certbot_install.yml"
-  - "curl -s https://raw.githubusercontent.com/mikkeloscar/arch-travis/master/arch-travis.sh | bash"
