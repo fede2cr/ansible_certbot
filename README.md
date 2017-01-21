@@ -1,5 +1,6 @@
-# ansible_recipes [![Build Status](https://travis-ci.org/fede2cr/ansible_recipes.svg?branch=master)](https://travis-ci.org/fede2cr/ansible_recipes)
-Ansible recipes for my own stuff... might be useful for your stuff as well
+# ansible_certbot [![Build Status](https://travis-ci.org/fede2cr/ansible_certbot.svg?branch=master)](https://travis-ci.org/fede2cr/ansible_certbot)
+
+Ansible recipes for certbot for easy install and admin of Let's Encrypt
 
 ## Instructions
 1. Create inside the recipe folder, an ```inventory/``` folder with a ```hosts``` file inside with a content like:
@@ -12,4 +13,9 @@ Ansible recipes for my own stuff... might be useful for your stuff as well
 4. Run ansible-playbook inside the recipe dir
 ```
 ansible-playbook some-recipe.yml
+```
+
+If you don't want to create an inventory you can use an example file:
+```
+ansible-playbook certbot_install.yml -i ../inventory/hosts.example -K
 ```
